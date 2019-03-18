@@ -1,0 +1,182 @@
+<div>
+  <v-app>
+  <headermenu/>
+  <v-content class="padding0">
+    <v-container>
+      <v-layout>
+        <v-flex xs12>
+          <p class="display-1 font-weight-light text-uppercase">draft posts</p>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <v-btn color="lime darken-4" to="/post" flat>New Post</v-btn>
+      </v-layout>
+      <hr>
+    </v-container>
+    <!--drafts posts start-->
+    <v-container>
+      <v-content class="padding0">
+        <v-container>
+          <v-layout v-for="(singleDraftData, i) in draftData" :key="i">
+            <v-flex xs12 sm4 pr-4 pb-4>
+              <v-card>
+                <v-card-media
+                  :src="baseImageUrl+singleDraftData.wp_featuredImage"
+                  height="180px"
+                ></v-card-media>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm8 pr-4>
+              <v-container>
+                <h2>{{singleDraftData.title}}</h2>
+                <v-avatar size="48">
+                  <img :src="image" :alt="username">
+                </v-avatar>
+                <router-link class="decoration font-weight-bold subheading black--text" :to="'/author/'+username"
+                >{{displayname}}
+                </router-link>
+              </v-container>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-center v-if="nodraftpost">
+            <h3>No drafts yet</h3>
+          </v-layout>
+          <v-layout justify-center v-if="loadmoredraftpost">
+            <v-btn class="textalign" outline @click="loadMore(3,'draft_post')">Load More</v-btn>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-container>
+  </v-content>
+  <!--draft posts end-->
+  <!--submitted for review start-->
+  <v-content class="padding0">
+    <v-container>
+      <v-layout>
+        <v-flex xs12>
+          <p class="display-1 font-weight-light text-uppercase">submitted for review</p>
+        </v-flex>
+      </v-layout>
+      <hr>
+      <v-content class="padding0">
+        <v-container>
+          <v-layout v-for="(SubmittedArticle, i) in submittedData" :key="i">
+            <v-flex xs12 sm4 pr-4 pb-4>
+              <v-card>
+                <v-card-media
+                  :src="baseImageUrl+SubmittedArticle.wp_featuredImage"
+                  height="180px"
+                ></v-card-media>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm8 pr-4>
+              <v-container>
+                <h2>{{SubmittedArticle.title}}</h2>
+                <v-avatar size="48">
+                  <img :src="image" :alt="username">
+                </v-avatar>
+                <router-link class="font-weight-bold subheading black--text decoration" :to="'/author/'+username"
+                >{{displayname}}
+                </router-link>
+              </v-container>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-center v-if="nosubmitpost">
+            <h3>No posts submitted yet</h3>
+          </v-layout>
+          <v-layout justify-center v-if="loadmoresubmitpost">
+            <v-btn outline @click="loadMore(3,'submit_review_post')">Load More</v-btn>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-container>
+  </v-content>
+  <!--submitted for review end-->
+  <!--Published posts start-->
+  <v-content class="padding0">
+    <v-container>
+      <v-layout>
+        <v-flex xs12>
+          <p class="display-1 font-weight-light text-uppercase">Published posts</p>
+        </v-flex>
+      </v-layout>
+      <hr>
+      <v-content class="padding0">
+        <v-container>
+          <v-layout v-for="(publishedArticle, i) in publishedData" :key="i">
+            <v-flex xs12 sm4 pr-4 pb-4>
+              <v-card>
+                <v-card-media
+                  :src="baseImageUrl+publishedArticle.wp_featuredImage"
+                  height="180px"
+                ></v-card-media>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm8 pr-4>
+              <v-container>
+                <h2>{{publishedArticle.title}}</h2>
+                <v-avatar size="48">
+                  <img :src="image" :alt="username">
+                </v-avatar>
+                <router-link class="font-weight-bold subheading black--text decoration" :to="'/author/'+username"
+                >{{displayname}}
+                </router-link>
+              </v-container>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-center v-if="nopublishpost">
+            <h3>No published posts yet</h3>
+          </v-layout>
+          <v-layout justify-center v-if="loadmorepublishpost">
+            <v-btn outline @click="loadMore(3,'publish_post')">Load More</v-btn>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-container>
+  </v-content>
+  <!--Published posts ends-->
+  <!--Scheduled posts start-->
+  <v-content class="padding0">
+    <v-container>
+      <v-layout>
+        <v-flex xs12>
+          <p class="display-1 font-weight-light text-uppercase">Scheduled posts</p>
+        </v-flex>
+      </v-layout>
+      <hr>
+      <v-content class="padding0">
+        <v-container>
+          <v-layout v-for="(scheduleArticle, i) in scheduledData" :key="i">
+            <v-flex xs12 sm4 pr-4 pb-4>
+              <v-card>
+                <v-card-media
+                  :src="baseImageUrl+scheduleArticle.wp_featuredImage"
+                  height="180px"
+                ></v-card-media>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm8 pr-4>
+              <v-container>
+                <h2>{{scheduleArticle.title}}</h2>
+                <v-avatar size="48">
+                  <img :src="image" :alt="username">
+                </v-avatar>
+                <router-link class="font-weight-bold subheading black--text decoration" :to="'/author/'+username"
+                >{{displayname}}
+                </router-link>
+              </v-container>
+            </v-flex>
+          </v-layout>
+          <v-layout justify-center v-if="noschedulepost">
+            <h3>No scheduled posts yet</h3>
+          </v-layout>
+          <v-layout justify-center v-if="loadmoreschedulepost">
+            <v-btn outline @click="loadMore(3,'schedule_post')">Load More</v-btn>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-container>
+  </v-content>
+  <!--Scheduled posts ends-->
+  <footermenu/>
+  </v-app>
+</div>
